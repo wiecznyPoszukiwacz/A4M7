@@ -1,0 +1,28 @@
+{
+  "name": "a4m7",
+  "version": "1.0.0",
+  "description": "automation game",
+  "main": "dist/boot.js",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {},
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiecznyPoszukiwacz/A4M7.git"
+  },
+  "keywords": [
+    "automation",
+    "game"
+  ],
+  "author": "Jarosław Mężyk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wiecznyPoszukiwacz/A4M7/issues"
+  },
+  "homepage": "https://github.com/wiecznyPoszukiwacz/A4M7#readme"
+}
