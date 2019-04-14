@@ -1,10 +1,37 @@
 import express = require('express')
-import * as statusRouter from './routers/status'
+import http = require('http')
+import socketio = require('socket.io')
 
-const server = express()
+import {Engine} from './engine/engine'
+import {GenericMachine} from './machines/generic';
 
-server.use('/status', statusRouter)
+let app = express();
+let server = new http.Server(app)
+let io = socketio(server)
 
-server.listen(3000, () => {
-    console.log('up and running')
+let gui = null
+
+server.listen(3000);
+
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/index.html');
+});
+
+io.on('connection', socket => {
+    gui = socket
+});
+
+
+const site = new Engine()
+
+const waterSource = new GenericMachine()
+
+site.registerMachine(waterSource)
+
+site.on('tick', status => {
+    if(gui !== null){
+        gui.emit('tick', status)
+    }
 })
+
+site.run()

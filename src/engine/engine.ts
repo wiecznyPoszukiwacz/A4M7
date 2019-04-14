@@ -1,30 +1,30 @@
 import {GenericMachine} from '../machines/generic'
 
-class Engine{
+export class Engine{
 
     machines: Array<GenericMachine>
+    tickObservers: Array<Function> = []
 
     constructor(){
         this.machines = []
-        console.log('site created')
+    }
+
+    public on(event: string, callback: Function){
+        if(event == 'tick'){
+            this.tickObservers.push(callback)
+        }
     }
 
     public registerMachine(machine: GenericMachine){
-        console.log(this.machines)
         this.machines.push(machine)
-        console.log(this.machines)
     }
 
     public run(): void{
-
         setInterval(this.tick.bind(this), 1000)
     }
 
     private tick(): void{
 
-        console.log('tick')
-
-        console.log(this.machines)
         for(let machine of this.machines){
             machine.phaseOut()
         }
@@ -37,16 +37,17 @@ class Engine{
             machine.phaseProcess()
         }
 
+        let status: Array<Object> = []
+        for(let machine of this.machines){
+            status.push(machine.status())
+        }
+
+        for(let cbk of this.tickObservers){
+            cbk(status)
+        }
 
     }
 }
 
-const site = new Engine()
-
-const waterSource = new GenericMachine()
-
-site.registerMachine(waterSource)
-
-site.run()
 
 

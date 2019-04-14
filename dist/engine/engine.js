@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const generic_1 = require("../machines/generic");
 class Engine {
     constructor() {
+        this.tickObservers = [];
         this.machines = [];
-        console.log('site created');
+    }
+    on(event, callback) {
+        if (event == 'tick') {
+            this.tickObservers.push(callback);
+        }
     }
     registerMachine(machine) {
-        console.log(this.machines);
         this.machines.push(machine);
-        console.log(this.machines);
     }
     run() {
         setInterval(this.tick.bind(this), 1000);
     }
     tick() {
-        console.log('tick');
-        console.log(this.machines);
         for (let machine of this.machines) {
             machine.phaseOut();
         }
@@ -26,10 +26,14 @@ class Engine {
         for (let machine of this.machines) {
             machine.phaseProcess();
         }
+        let status = [];
+        for (let machine of this.machines) {
+            status.push(machine.status());
+        }
+        for (let cbk of this.tickObservers) {
+            cbk(status);
+        }
     }
 }
-const site = new Engine();
-const waterSource = new generic_1.GenericMachine();
-site.registerMachine(waterSource);
-site.run();
+exports.Engine = Engine;
 //# sourceMappingURL=engine.js.map
