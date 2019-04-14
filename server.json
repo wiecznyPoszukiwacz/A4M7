@@ -1,0 +1,19 @@
+{
+	"apps":[
+		{
+			"name": "A4M7-Engine",
+			"script": "src/server.js",
+			"watch": true,
+			"merge_logs": false,
+			"cwd": "./",
+			"ignore_watch": ["node_modules", ".git", ".vscode", ".history", ".gitignore", "querylog.txt"],
+			"log_date_format" : "",
+			"env": {
+				"NODE_ENV": "development"
+			},
+			"env_production": {
+				"NODE_ENV": "production"
+			}
+		}
+	]
+}
