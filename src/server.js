@@ -5,7 +5,13 @@ const app = express()
 const Engine = require ('./engine/engine')
 
 const statusRouter = require('./routers/status')
+const inventoryRouter = require('./routers/inventory')
+const cors = require('cors')
+
+app.use(cors())
+
 app.use('/status', statusRouter)
+app.use('/inventory', inventoryRouter)
 
 let s = app.listen(2000, () => {
     console.log('up and running')
